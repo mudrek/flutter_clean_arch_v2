@@ -9,16 +9,17 @@ class LoginReducer extends Reducer {
   final LoginUsecases loginUsecases;
 
   LoginReducer({required this.loginUsecases}) {
-    on(() => [doLogin], _doLogin);
+    on(() => [doLogin.value], _doLogin);
   }
 
-  void _doLogin() async {
+  _doLogin() async {
     loginState.setValue(LoadingLoginState());
     final loginUserDTO = doLogin.value;
     await loginUsecases.doLogin(loginUserDTO).fold(
-          (userEntity) => SuccessLoginState(userEntity: userEntity),
-          (error) => ErrorLoginState(
-            niweException: error,
+          (userEntity) =>
+              loginState.setValue(SuccessLoginState(userEntity: userEntity)),
+          (error) => loginState.setValue(
+            ErrorLoginState(niweException: error),
           ),
         );
   }

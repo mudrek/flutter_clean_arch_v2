@@ -8,7 +8,7 @@ class LoginUserDTO implements DTOValidate {
   final Email email;
   final String password;
 
-  LoginUserDTO({
+  const LoginUserDTO({
     required this.email,
     required this.password,
   });
